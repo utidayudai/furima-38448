@@ -19,6 +19,7 @@
 
 - has_many :sells
 - has_many :buy_records
+- has_many :buys
 
 
 
@@ -65,7 +66,6 @@
 ## Association
 
 
-- belongs_to :sell
 - belongs_to :buy_record
 
 
@@ -80,4 +80,4 @@
 
 
 - belong_to :user
-- has_many :buys
+- has_one :buys
