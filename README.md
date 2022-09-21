@@ -19,7 +19,6 @@
 
 - has_many :sells
 - has_many :buy_records
-- has_many :buys
 
 
 
@@ -43,7 +42,7 @@
 
   
 - belongs_to :user
-- belongs_to :buy
+- belongs_to :buy_records
 
 
 
@@ -53,14 +52,13 @@
 
 | colum          | types      | option                         |
 | -------------- | ---------- | ------------------------------ |
-| country        | integer    | null: false                    |
+| country_id     | integer    | null: false                    |
 | city           | string     | null: false                    |
 | address_number | string     | null: false                    |
 | address        | string     | null: false                    |
 | building       | string     |                                |
 | phone_number   | string     | null: false                    |
 | buy_record     | references | null: false, foreign_key: true |
-| sell           | references | null: false, foreign_key: true |
 
 
 ## Association
@@ -73,11 +71,12 @@
 
 | colum | types      | option                         |
 | ----- | ---------- | ------------------------------ |
-| use   | references | null: false, foreign_key: true |
-| buy   | references | null: false, foreign_key: true |
+| user  | references | null: false, foreign_key: true |
+| sell   | references | null: false, foreign_key: true |
 
 ## Association
 
 
 - belong_to :user
 - has_one :buys
+- has_one :sells
