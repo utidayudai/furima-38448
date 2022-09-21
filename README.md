@@ -42,7 +42,7 @@
 
   
 - belongs_to :user
-- has_many :buy_records
+- has_one :buy_records
 
 
 
@@ -52,7 +52,7 @@
 
 | colum          | types      | option                         |
 | -------------- | ---------- | ------------------------------ |
-| country_id     | integer    | null: false                    |
+| place_id       | integer    | null: false                    |
 | city           | string     | null: false                    |
 | address_number | string     | null: false                    |
 | address        | string     | null: false                    |
