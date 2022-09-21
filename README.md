@@ -28,8 +28,8 @@
 
 | colum             | types      | option                         |
 | ----------------- | ---------- | ------------------------------ |
-| nickname          | string     | null: false                    |
 | title             | string     | null: false                    |
+| title_content     | text       | null: false                    |
 | price             | integer    | null: false                    |
 | category_id       | integer    | null: false                    |
 | condition_id      | integer    | null: false                    |
@@ -42,7 +42,7 @@
 
   
 - belongs_to :user
-- belongs_to :buy_records
+- has_many :buy_records
 
 
 
@@ -72,11 +72,11 @@
 | colum | types      | option                         |
 | ----- | ---------- | ------------------------------ |
 | user  | references | null: false, foreign_key: true |
-| sell   | references | null: false, foreign_key: true |
+| sell  | references | null: false, foreign_key: true |
 
 ## Association
 
 
-- belong_to :user
-- has_one :buys
-- has_one :sells
+- belongs_to :user
+- has_one :buy
+- belongs_to :sell
