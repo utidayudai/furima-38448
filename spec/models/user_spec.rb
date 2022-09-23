@@ -69,8 +69,8 @@ RSpec.describe User, type: :model do
         expect(@user.errors.full_messages).to include('Last name 全角文字を使用してください','First name 全角文字を使用してください')
       end
       it 'お名前(全角)は、全角（漢字・ひらがな・カタカナ）での入力が必須であること' do
-        @user.last_name = '/\A[ぁ-んァ-ヶ一-龥々ー]+\z/'
-        @user.first_name = '/\A[ぁ-んァ-ヶ一-龥々ー]+\z/'
+        @user.last_name = 'test'
+        @user.first_name = 'test'
         @user.valid?
         expect(@user.errors.full_messages).to include('Last name 全角文字を使用してください','First name 全角文字を使用してください')
       end
@@ -81,8 +81,8 @@ RSpec.describe User, type: :model do
         expect(@user.errors.full_messages).to include('Kana last name にはカタカナを設定してください','Kana first name にはカタカナを設定してください')
       end
       it 'お名前カナ(全角)は、全角（カタカナ）での入力が必須であること' do
-        @user.kana_last_name = '/\A[ァ-ヶ]+\z/'
-        @user.kana_first_name = '/\A[ァ-ヶ]+\z/'
+        @user.kana_last_name = 'てすと'
+        @user.kana_first_name = 'てすと'
         @user.valid?
         expect(@user.errors.full_messages).to include('Kana last name にはカタカナを設定してください','Kana first name にはカタカナを設定してください')
       end
