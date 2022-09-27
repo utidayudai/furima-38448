@@ -6,6 +6,12 @@ RSpec.describe Sell, type: :model do
   end
 
   describe '商品出品機能' do
+    context '商品が出品できる場合'
+      it '全ての項目が存在すれば出品できる' do
+        expect(@sell).to be_valid
+      end
+
+
     context '商品が出品できない場合' do
       it 'ユーザーが紐付いていなければ投稿できない' do
         @sell.user = nil
@@ -16,11 +22,6 @@ RSpec.describe Sell, type: :model do
         @sell.title = ''
         @sell.valid?
         expect(@sell.errors.full_messages).to include ("Title can't be blank")
-      end
-      it '商品名は40文字以内でないと保存できない' do
-        @sell.title = Faker::Lorem.characters(number:41)
-        @sell.valid?
-        expect(@sell.errors.full_messages).to include ("Title is too long (maximum is 40 characters)")
       end
       it '商品の説明は空では保存できない' do
         @sell.title_content = ''
@@ -43,39 +44,39 @@ RSpec.describe Sell, type: :model do
         expect(@sell.errors.full_messages).to include("Price is not a number")
       end
       it '販売価格が300円以上でなければ出品できない' do
-        @sell.price = Faker::Lorem.characters(number:299)
+        @sell.price = 299
         @sell.valid?
-        expect(@sell.errors.full_messages).to include("Price is not a number")
+        expect(@sell.errors.full_messages).to include("Price must be greater than or equal to 300")
       end
       it '販売価格が9999999円以下でなければ出品できない' do
-        @sell.price = Faker::Lorem.characters(number:10000000)
+        @sell.price = 10000000
         @sell.valid?
-        expect(@sell.errors.full_messages).to include("Price is not a number")
+        expect(@sell.errors.full_messages).to include("Price must be less than or equal to 9999999")
       end
       it 'カテゴリーが空では保存できない' do
-        @sell.category_id = '0'
-        @sell.valid?
-        expect(@sell.errors.full_messages).to include("Condition can't be blank")
-      end
-      it '商品の状態が空では保存できない' do
-        @sell.condition_id = '0'
+        @sell.category_id = '1'
         @sell.valid?
         expect(@sell.errors.full_messages).to include("Category can't be blank")
       end
+      it '商品の状態が空では保存できない' do
+        @sell.condition_id = '1'
+        @sell.valid?
+        expect(@sell.errors.full_messages).to include("Condition can't be blank")
+      end
       it '配送料の負担が空では保存できない' do
-        @sell.derivery_price_id = '0'
-        @sell.valid?
-        expect(@sell.errors.full_messages).to include("Delively can't be blank")
-      end
-      it '発送場所を指定しないと出品できない' do
-        @sell.place_id = '0'
-        @sell.valid?
-        expect(@sell.errors.full_messages).to include("Price is not a number")
-      end
-      it '発送までの日数を指定しないと出品できない' do
-        @sell.delively_id = '0'
+        @sell.derivery_price_id = '1'
         @sell.valid?
         expect(@sell.errors.full_messages).to include("Derivery price can't be blank")
+      end
+      it '発送場所を指定しないと出品できない' do
+        @sell.place_id = '1'
+        @sell.valid?
+        expect(@sell.errors.full_messages).to include("Place can't be blank")
+      end
+      it '発送までの日数を指定しないと出品できない' do
+        @sell.delively_id = '1'
+        @sell.valid?
+        expect(@sell.errors.full_messages).to include("Delively can't be blank")
       end
       it 'imageが空では保存できない' do
         @sell.image = nil
