@@ -7,10 +7,9 @@ RSpec.describe Sell, type: :model do
 
   describe '商品出品機能' do
     context '商品が出品できる場合'
-      it '全ての項目が存在すれば出品できる' do
-        expect(@sell).to be_valid
-      end
-
+    it '全ての項目が存在すれば出品できる' do
+      expect(@sell).to be_valid
+    end
 
     context '商品が出品できない場合' do
       it 'ユーザーが紐付いていなければ投稿できない' do
@@ -21,17 +20,17 @@ RSpec.describe Sell, type: :model do
       it '商品名が空では保存できない' do
         @sell.title = ''
         @sell.valid?
-        expect(@sell.errors.full_messages).to include ("Title can't be blank")
+        expect(@sell.errors.full_messages).to include("Title can't be blank")
       end
       it '商品の説明は空では保存できない' do
         @sell.title_content = ''
         @sell.valid?
-        expect(@sell.errors.full_messages).to include ("Title content can't be blank")
+        expect(@sell.errors.full_messages).to include("Title content can't be blank")
       end
       it '商品の説明は1000文字以内でないと保存できない' do
-        @sell.title_content = Faker::Lorem.characters(number:1001)
+        @sell.title_content = Faker::Lorem.characters(number: 1001)
         @sell.valid?
-        expect(@sell.errors.full_messages).to include ("Title content is too long (maximum is 1000 characters)")
+        expect(@sell.errors.full_messages).to include('Title content is too long (maximum is 1000 characters)')
       end
       it '値段が空では保存できない' do
         @sell.price = ''
@@ -41,17 +40,17 @@ RSpec.describe Sell, type: :model do
       it '値段(半角)は、半角(数字)での入力が必須であること' do
         @sell.price = '１２３'
         @sell.valid?
-        expect(@sell.errors.full_messages).to include("Price is not a number")
+        expect(@sell.errors.full_messages).to include('Price is not a number')
       end
       it '販売価格が300円以上でなければ出品できない' do
         @sell.price = 299
         @sell.valid?
-        expect(@sell.errors.full_messages).to include("Price must be greater than or equal to 300")
+        expect(@sell.errors.full_messages).to include('Price must be greater than or equal to 300')
       end
       it '販売価格が9999999円以下でなければ出品できない' do
-        @sell.price = 10000000
+        @sell.price = 10_000_000
         @sell.valid?
-        expect(@sell.errors.full_messages).to include("Price must be less than or equal to 9999999")
+        expect(@sell.errors.full_messages).to include('Price must be less than or equal to 9999999')
       end
       it 'カテゴリーが空では保存できない' do
         @sell.category_id = '1'
