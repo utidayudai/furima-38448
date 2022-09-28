@@ -1,12 +1,16 @@
 class SellsController < ApplicationController
   before_action :authenticate_user!, except: [:show, :index]
-  
+
   def index
-    #@sells = Sell.order('created_at DESC')
+    @sells = Sell.order('created_at DESC')
   end
 
   def new
     @sell = Sell.new
+  end
+
+  def show
+    # @sell = Sell.find(params[:id])
   end
 
   def create
