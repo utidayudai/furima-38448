@@ -10,7 +10,7 @@ class SellsController < ApplicationController
   end
 
   def show
-    @sell = Sell.find(params[:id])
+    # @sell = Sell.find(params[:id])
   end
 
   def create

@@ -6,28 +6,27 @@
     <h2 class="name">
       <%= "商品名" %>
     </h2>
-    <%if @sells[0] != nil%>
-      <div class="item-img-content">
-        <% @sells.each do |sell| %>
-          <%= image_tag sell.image.variant(resize: '400x400'), class: 'sell-image' if sell.image.attached? %>
-          <%# if sell. buy_record.present? %>
-            <%#div class="sold-out">
-              <span>Sold Out!!</span>
-            </div>
-          <%# end %>
-        <% end %>
+    
+    <div class="item-img-content">
+      <% @sells.each do |sell| %>
+        <%= image_tag sell.image.variant(resize: '400x400'), class: 'sell-image' if sell.image.attached? %>
+        <%# if sell. buy_record.present? %>
+          <%#div class="sold-out">
+            <span>Sold Out!!</span>
+          </div>
+        <%# end %>
+      <% end %>
           <%# //商品が売れている場合は、sold outを表示しましょう %>
-      </div>
-    <% else %>
-      <div class="item-price-box">
-        <span class="item-price">
-          ¥ 999,999,999
-        </span>
-        <span class="item-postage">
-          <%= "配送料負担" %>
-        </span>
-      </div>
-    <% end %>
+    </div>
+    
+    <div class="item-price-box">
+      <span class="item-price">
+        ¥ 999,999,999
+      </span>
+      <span class="item-postage">
+        <%= "配送料負担" %>
+      </span>
+    </div>
     <%# ログインしているユーザーと出品しているユーザーが、同一人物の場合と同一人物ではない場合で、処理を分けましょう %>
 
     <%= link_to "商品の編集", "#", method: :get, class: "item-red-btn" %>
