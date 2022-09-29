@@ -1,6 +1,6 @@
 class SellsController < ApplicationController
   before_action :authenticate_user!, except: [:show, :index]
-  before_action :set_sell, only: [:edit, :show, :update]
+  before_action :set_sell, only: [:edit, :show, :update, :destroy]
   before_action :ensure_user, { only: [:edit, :update] }
 
   def index
@@ -31,6 +31,14 @@ class SellsController < ApplicationController
       redirect_to sell_path
     else
       render :edit
+    end
+  end
+
+  def destroy
+    if @sell.destroy
+      redirect_to root_path
+    else
+      redirect_to root_path
     end
   end
 
