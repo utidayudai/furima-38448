@@ -35,10 +35,12 @@ class SellsController < ApplicationController
   end
 
   def destroy
-    if @sell.destroy
-      redirect_to root_path
-    else
-      redirect_to root_path
+    if @sell.user_id == current_user.id
+      if @sell.destroy
+        redirect_to root_path
+      else
+        redirect_to root_path
+      end
     end
   end
 
