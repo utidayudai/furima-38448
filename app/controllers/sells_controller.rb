@@ -1,6 +1,6 @@
 class SellsController < ApplicationController
   before_action :authenticate_user!, except: [:show, :index]
-  before_action :set_sell, only: [:edit, :show]
+  before_action :set_sell, only: [:edit, :show, :update]
   before_action :ensure_user, { only: [:edit, :update] }
 
   def index
@@ -27,7 +27,6 @@ class SellsController < ApplicationController
   end
 
   def update
-    @sell = Sell.find(params[:id])
     if @sell.update(sell_params)
       redirect_to sell_path
     else
