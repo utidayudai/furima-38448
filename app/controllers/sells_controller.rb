@@ -1,7 +1,7 @@
 class SellsController < ApplicationController
   before_action :authenticate_user!, except: [:show, :index]
-
-  before_action :set_sell, only: [:edit, :show]
+  before_action :set_sell, only: [:edit, :show, :update]
+  before_action :ensure_user, { only: [:edit, :update] }
 
   def index
     @sells = Sell.order('created_at DESC')
@@ -26,6 +26,14 @@ class SellsController < ApplicationController
     end
   end
 
+  def update
+    if @sell.update(sell_params)
+      redirect_to sell_path
+    else
+      render :edit
+    end
+  end
+
   private
 
   def sell_params
@@ -35,5 +43,11 @@ class SellsController < ApplicationController
 
   def set_sell
     @sell = Sell.find(params[:id])
+  end
+
+  def ensure_user
+    @sells = current_user.sells
+    @sell = @sells.find_by(id: params[:id])
+    redirect_to root_path unless @sell
   end
 end
