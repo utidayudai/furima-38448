@@ -12,7 +12,7 @@ class BuyBuy_record
   end
 
   def save
-    @buy = Buy.create(place_id: place_id, city: city, address_number: address_number, address: address, building: building, phone_number: phone_number)
-    Buy_record.create(user_id: user.id, sell_id: sell.id)
+    @buy = Buy_record.create(user_id: user.id, sell_id: params[:sell_id])
+    Buy.create(place_id: place_id, city: city, address_number: address_number, address: address, building: building, phone_number: phone_number)
   end
 end
