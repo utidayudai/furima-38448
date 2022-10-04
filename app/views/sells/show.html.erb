@@ -9,12 +9,12 @@
     
     <div class="item-img-content">
       
-        <%= image_tag @sell.image, class: 'item-img' if @sell.image.attached? %>
-        <%# if sell. buy_record.present? %>
-          <%#div class="sold-out">
-            <span>Sold Out!!</span>
-          </div>
-        <%# end %>
+      <%= image_tag @sell.image, class: 'item-img' if @sell.image.attached? %>
+       <% if BuyRecord.exists?(sell_id: @sell.id) %>
+        <div class='sold-out'>
+          <span>Sold Out!!</span>
+        </div>
+      <% end %>
           <%# //商品が売れている場合は、sold outを表示しましょう %>
     </div>
     
@@ -27,7 +27,8 @@
       </span>
     </div>
     
-    <% if @sell.present? %>
+    <% if BuyRecord.exists?(sell_id: @sell.id) %>
+    <% else%>
       <% if user_signed_in? %>
         <% if @sell.user_id == current_user.id %>
           <%= link_to "商品の編集", edit_sell_path(@sell.id), method: :get, class: "item-red-btn" %>

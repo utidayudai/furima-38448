@@ -133,8 +133,8 @@
             <%= link_to sell_path(sell.id), method: :get do %>
               <div class='item-img-content'>
                 <%= image_tag sell.image, class: 'item-img' if sell.image.attached? %>
-                <%# if sell. buy_record.present? %>
-                  <%#div class='sold-out'>
+                <% if BuyRecord.exists?(sell_id: sell.id) %>
+                  <div class='sold-out'>
                     <span>Sold Out!!</span>
                   </div>
                 <% end %>
