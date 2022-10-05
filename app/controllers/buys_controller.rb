@@ -1,8 +1,8 @@
 class BuysController < ApplicationController
   before_action :authenticate_user!, except: :index
   before_action :seller_cannot_buy, { only: [:index, :create] }
-  before_action :purchasing_and_login_restrictions, only:[:index]
-  before_action :detail_screen_migration_restrictions, only:[:index]
+  before_action :purchasing_and_login_restrictions, only: [:index]
+  before_action :detail_screen_migration_restrictions, only: [:index]
 
   def index
     @buy_buy_record = BuyBuyRecord.new
@@ -22,31 +22,27 @@ class BuysController < ApplicationController
   private
 
   def buy_params
-    params.require(:buy_buy_record).permit(:place_id, :city, :address_number, :address, :building, :phone_number).merge(user_id: current_user.id, sell_id: params[:sell_id], token: params[:token])
+    params.require(:buy_buy_record).permit(:place_id, :city, :address_number, :address, :building, :phone_number).merge(
+      user_id: current_user.id, sell_id: params[:sell_id], token: params[:token]
+    )
   end
 
   def purchasing_and_login_restrictions
-    unless user_signed_in?
-      redirect_to user_session_path
-    end
+    redirect_to user_session_path unless user_signed_in?
   end
 
   def seller_cannot_buy
     @sell = Sell.find(params[:sell_id])
-    if current_user == @sell.user_id
-      redirect_to root_path
-    end
+    redirect_to root_path if current_user == @sell.user_id
   end
 
   def detail_screen_migration_restrictions
     @sell = Sell.find(params[:sell_id])
-    if BuyRecord.exists?(sell_id: @sell.id)
-    redirect_to root_path
-    end
+    redirect_to root_path if BuyRecord.exists?(sell_id: @sell.id)
   end
 
   def pay_item
-    Payjp.api_key = ENV["PAYJP_SECRET_KEY"]
+    Payjp.api_key = ENV['PAYJP_SECRET_KEY']
     Payjp::Charge.create(
       amount: @sell.price,
       card: buy_params[:token],
