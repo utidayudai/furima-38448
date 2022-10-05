@@ -1,6 +1,7 @@
 class BuysController < ApplicationController
   before_action :authenticate_user!, except: :index
-  before_action :seller_cannot_buy, { only: [:index, :create] }
+  before_action :set_sell, only: [:index, :create]
+  before_action :seller_cannot_buy, { only: [:index] }
   before_action :purchasing_and_login_restrictions, only: [:index]
   before_action :detail_screen_migration_restrictions, only: [:index]
 
@@ -27,18 +28,28 @@ class BuysController < ApplicationController
     )
   end
 
+  def set_sell
+    @sell = Sell.find(params[:sell_id])
+  end
+
+
   def purchasing_and_login_restrictions
-    redirect_to user_session_path unless user_signed_in?
+    unless user_signed_in?
+     redirect_to user_session_path
+    end 
   end
 
   def seller_cannot_buy
-    @sell = Sell.find(params[:sell_id])
-    redirect_to root_path if current_user == @sell.user_id
+    
+    if current_user.id == @sell.user.id
+      redirect_to root_path 
+    end
   end
 
   def detail_screen_migration_restrictions
-    @sell = Sell.find(params[:sell_id])
-    redirect_to root_path if BuyRecord.exists?(sell_id: @sell.id)
+    if BuyRecord.exists?(sell_id: @sell.id)
+      redirect_to root_path 
+    end
   end
 
   def pay_item
