@@ -1,10 +1,11 @@
 class BuyBuyRecord
   include ActiveModel::Model
-  attr_accessor :place_id, :city, :address, :address_number, :building, :phone_number, :user_id, :sell_id
+  attr_accessor :place_id, :city, :address, :address_number, :building, :phone_number, :user_id, :sell_id, :token
 
   validates :place_id, numericality: {other_than: 1, message: "can't be blank"}
   validate  :user_id
   validate  :sell_id
+  validates :token, presence: true
   with_options presence: { message: "can't be blank" } do
     validates :city
     validates :address_number, format: { with: /\A\d{3}[-]\d{4}\z/ }
