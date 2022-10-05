@@ -1,5 +1,5 @@
 class BuysController < ApplicationController
-  before_action :authenticate_user!, except: :index
+  before_action :authenticate_user!
   before_action :set_sell, only: [:index, :create]
   before_action :seller_cannot_buy, { only: [:index] }
   before_action :purchasing_and_login_restrictions, only: [:index]
