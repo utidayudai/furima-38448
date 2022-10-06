@@ -61,7 +61,7 @@ class SellsController < ApplicationController
   end
 
   def sell_detail_migration_restrictions
-    if user_signed_in? && current_user.id == @sell.user_id
+    if @sell.user_id
       redirect_to root_path if BuyRecord.exists?(sell_id: @sell.id)
     else
       redirect_to root_path

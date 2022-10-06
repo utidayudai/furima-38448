@@ -41,7 +41,7 @@ class BuysController < ApplicationController
 
   def seller_cannot_buy
     
-    if user_signed_in? && current_user.id == @sell.user.id
+    if @sell.user.id
       redirect_to root_path 
     end
   end

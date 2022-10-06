@@ -3,10 +3,10 @@ class BuyBuyRecord
   attr_accessor :place_id, :city, :address, :address_number, :building, :phone_number, :user_id, :sell_id, :token
 
   validates :place_id, numericality: { other_than: 1, message: "can't be blank" }
-  validates  :user_id, presence: true
-  validates  :sell_id, presence: true
-  validates :token, presence: true
   with_options presence: true do
+    validates  :user_id
+    validates  :sell_id
+    validates  :token
     validates :city
     validates :address_number, format: { with: /\A\d{3}-\d{4}\z/ }
     validates :address
