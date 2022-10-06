@@ -74,7 +74,7 @@ RSpec.describe BuyBuyRecord, type: :model do
       @buy_buy_record.valid?
       expect(@buy_buy_record.errors.full_messages).to include("User can't be blank")
     end
-    it 'itemが紐付いていなければ購入できない' do
+    it 'sellが紐付いていなければ購入できない' do
       @buy_buy_record.sell_id  = nil
       @buy_buy_record.valid?
       expect(@buy_buy_record.errors.full_messages).to include("Sell can't be blank")

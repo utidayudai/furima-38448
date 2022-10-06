@@ -2,7 +2,6 @@ class BuysController < ApplicationController
   before_action :authenticate_user!
   before_action :set_sell, only: [:index, :create]
   before_action :seller_cannot_buy, { only: [:index] }
-  before_action :purchasing_and_login_restrictions, only: [:index]
   before_action :detail_screen_migration_restrictions, only: [:index]
 
   def index
@@ -32,16 +31,8 @@ class BuysController < ApplicationController
     @sell = Sell.find(params[:sell_id])
   end
 
-
-  def purchasing_and_login_restrictions
-    unless user_signed_in?
-     redirect_to user_session_path
-    end 
-  end
-
   def seller_cannot_buy
-    
-    if @sell.user.id
+    if current_user.id == @sell.user.id
       redirect_to root_path 
     end
   end
