@@ -2,6 +2,7 @@ class SellsController < ApplicationController
   before_action :authenticate_user!, except: [:show, :index]
   before_action :set_sell, only: [:edit, :show, :update, :destroy]
   before_action :ensure_user, { only: [:edit, :update, :destroy] }
+  before_action :sell_detail_migration_restrictions, only: [:edit]
 
   def index
     @sells = Sell.order('created_at DESC')
@@ -57,5 +58,13 @@ class SellsController < ApplicationController
     @sells = current_user.sells
     @sell = @sells.find_by(id: params[:id])
     redirect_to root_path unless @sell
+  end
+
+  def sell_detail_migration_restrictions
+    if current_user.id == @sell.user_id
+      redirect_to root_path if BuyRecord.exists?(sell_id: @sell.id)
+    else
+      redirect_to root_path
+    end
   end
 end

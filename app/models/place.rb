@@ -21,4 +21,5 @@ class Place < ActiveHash::Base
 
   include ActiveHash::Associations
   has_many :sells
+  has_many :buys
 end
