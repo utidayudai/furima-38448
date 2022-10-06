@@ -27,15 +27,12 @@
     
     <% if BuyRecord.exists?(sell_id: @sell.id) %>
     <% else%>
-      <% if user_signed_in? %>
-        <% if @sell.user_id == current_user.id %>
-          <%= link_to "商品の編集", edit_sell_path(@sell.id), method: :get, class: "item-red-btn" %>
-          <p class="or-text">or</p>
-          <%= link_to "削除", sell_path(@sell.id), method: :delete, class:"item-destroy" %>
-        <% else %>
-          
-          <%= link_to "購入画面に進む", sell_buys_path(@sell.id), class:"item-red-btn"%>
-        <% end %>
+      <% if @sell.user_id == current_user.id %>
+        <%= link_to "商品の編集", edit_sell_path(@sell.id), method: :get, class: "item-red-btn" %>
+        <p class="or-text">or</p>
+        <%= link_to "削除", sell_path(@sell.id), method: :delete, class:"item-destroy" %>
+      <% else %>
+        <%= link_to "購入画面に進む", sell_buys_path(@sell.id), class:"item-red-btn"%>
       <% end %>
     <% end %>
     
