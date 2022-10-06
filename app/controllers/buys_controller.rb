@@ -32,15 +32,11 @@ class BuysController < ApplicationController
   end
 
   def seller_cannot_buy
-    if current_user.id == @sell.user.id
-      redirect_to root_path 
-    end
+    redirect_to root_path if current_user.id == @sell.user.id
   end
 
   def detail_screen_migration_restrictions
-    if BuyRecord.exists?(sell_id: @sell.id)
-      redirect_to root_path 
-    end
+    redirect_to root_path if BuyRecord.exists?(sell_id: @sell.id)
   end
 
   def pay_item

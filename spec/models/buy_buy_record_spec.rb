@@ -67,15 +67,15 @@ RSpec.describe BuyBuyRecord, type: :model do
     it '電話番号に半角数字以外が含まれている場合は購入できない' do
       @buy_buy_record.phone_number = '１２３４５６７８９０９'
       @buy_buy_record.valid?
-      expect(@buy_buy_record.errors.full_messages).to include("Phone number is invalid")
+      expect(@buy_buy_record.errors.full_messages).to include('Phone number is invalid')
     end
     it 'userが紐付いていなければ購入できない' do
-      @buy_buy_record.user_id  = nil
+      @buy_buy_record.user_id = nil
       @buy_buy_record.valid?
       expect(@buy_buy_record.errors.full_messages).to include("User can't be blank")
     end
     it 'sellが紐付いていなければ購入できない' do
-      @buy_buy_record.sell_id  = nil
+      @buy_buy_record.sell_id = nil
       @buy_buy_record.valid?
       expect(@buy_buy_record.errors.full_messages).to include("Sell can't be blank")
     end
