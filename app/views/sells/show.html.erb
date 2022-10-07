@@ -32,7 +32,9 @@
         <p class="or-text">or</p>
         <%= link_to "削除", sell_path(@sell.id), method: :delete, class:"item-destroy" %>
       <% else %>
-        <%= link_to "購入画面に進む", sell_buys_path(@sell.id), class:"item-red-btn"%>
+        <% if user_signed_in? %>
+          <%= link_to "購入画面に進む", sell_buys_path(@sell.id), class:"item-red-btn"%>
+        <% end %>
       <% end %>
     <% end %>
     
